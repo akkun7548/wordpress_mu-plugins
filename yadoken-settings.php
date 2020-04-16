@@ -97,63 +97,6 @@ function yadoken_register_post_type() {
 }
 
 /**
- * カスタム投稿タイプ名変更用
- * 
- * register_post_type()の第一引数を変更した際データベースのpost_typeフィールドは更新されないため、
- * Post_Type_Switcherなどのプラグインを使って投稿タイプを変更する必要があります。
- * その際に新旧投稿タイプが両方登録されている必要があるため、一時的にこのコードを使用しています。
- */
-add_action( 'init', 'yadoken_register_post_type_old' );
-function yadoken_register_post_type_old() {
-
-  //お知らせ(旧)
-  register_post_type(
-    'news',
-    array(
-      'labels' => array(
-        'name' => 'お知らせ(旧)'
-      ),
-      'description' => 'お知らせ用のカスタム投稿タイプです。',
-      'public' => true,
-      'exclude_from_search' => true,
-      'menu_position' => 10,
-      'menu_icon' => 'dashicons-megaphone',
-      'capability_type' => 'page',
-      'map_meta_cap' => true,
-      'rewrite' => array(
-        'slug' => 'news_old',
-        'with_front' => false
-      ),
-      'show_in_rest' => true,
-      'has_archive' => true,
-    )
-  );
-
-  //議事録(旧)
-  register_post_type(
-    'minutes',
-    array(
-      'labels' => array(
-        'name' => '議事録(旧)'
-      ),
-      'description' => '内部向け議事録のカスタム投稿タイプです。',
-      'public' => true,
-      'exclude_from_search' => true,
-      'menu_position' => 20,
-      'menu_icon' => 'dashicons-media-text',
-      'capability_type' => 'post',
-      'map_meta_cap' => true,
-      'rewrite' => array(
-        'slug' => 'minutes_old',
-        'with_front' => false
-      ),
-      'show_in_rest' => true,
-      'has_archive' => true,
-    )
-  );
-}
-
-/**
  * 非ログイン状態で議事録アーカイブのクエリを活動報告に変換
  * 
  * ログインしていない状態で議事録アーカイブにアクセスした場合、活動報告が取得されるように
